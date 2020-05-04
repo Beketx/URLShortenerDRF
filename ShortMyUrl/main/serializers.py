@@ -1,6 +1,6 @@
-from rest_framework import serialziers
+from rest_framework import serializers
 from main.models import model_short
-class BindSerializer(serialziers.ModelSerializer):
+class BindSerializer(serializers.ModelSerializer):
     class Meta:
         model = model_short
         fields = '__all__'
