@@ -1,4 +1,4 @@
 from django.contrib import admin
-from main.models import model_short
+from main.models import Model_Short
 # Register your models here.
-admin.site.register(model_short)
+admin.site.register(Model_Short)
