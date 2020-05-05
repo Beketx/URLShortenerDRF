@@ -23,9 +23,12 @@ class LinkAPIView(APIView):
 class BindAPIView(APIView):
     token = ShortenerOfUrl().create_token()  # save new token by our shortener.py->create_token
     def post(self,request):
-        form = request.data
-        new_url = Model_Short.objects.create(long_url=form,short_url=self.token)
-        serializer = BindSerializer(data=new_url)
+        a = request.data
+        # b = self.token
+        # data = {"long_url":a,"short_url":b}
+        # data[1] = request.data
+        # data[2] = self.token
+        serializer = BindSerializer(data=a)
         if serializer.is_valid():
             saved_serializer = serializer.save()
         return Response(serializer.data)
