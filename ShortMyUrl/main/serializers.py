@@ -11,7 +11,6 @@ import uuid
 class BindSerializer(serializers.Serializer):
     long_url = serializers.URLField()
     short_url = serializers.UUIDField(default=None)
-    token = ShortenerOfUrl().create_token()
     def create(self, validated_data):
-        new_url = Model_Short.objects.create(long_url = validated_data['long_url'],short_url=self.token)
+        new_url = Model_Short.objects.create(long_url = validated_data['long_url'],short_url=ShortenerOfUrl().create_token())
         return new_url

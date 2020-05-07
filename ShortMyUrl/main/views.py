@@ -1,34 +1,22 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import redirect
 from main.models import Model_Short
-from main.shortener import ShortenerOfUrl
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from main.serializers import BindSerializer
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
 
 class LinkAPIView(APIView):
-    # token = ShortenerOfUrl().create_token()  # save new token by our shortener.py->create_token
-
     def get(self,request,token):
         # url = get_object_or_404(Model_Short,short_url=token) #[0] the actual object
         url = Model_Short.objects.filter(short_url=token).first()
         serializer = BindSerializer(url)
-        # return Response(serializer.data) #redirect to actual url
-        # return redirect(serializer.data)
         return redirect(url.long_url)
-        # return HttpResponseRedirect(serializer.data)
+
 
 
 class BindAPIView(APIView):
-    token = ShortenerOfUrl().create_token()  # save new token by our shortener.py->create_token
     def post(self,request):
-        a = request.data
-        # b = self.token
-        # data = {"long_url":a,"short_url":b}
-        # data[1] = request.data
-        # data[2] = self.token
-        serializer = BindSerializer(data=a)
+        serializer = BindSerializer(data=request.data)
         if serializer.is_valid():
             saved_serializer = serializer.save()
         return Response(serializer.data)
